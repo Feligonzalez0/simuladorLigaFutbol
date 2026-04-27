@@ -1,4 +1,4 @@
-package com.example.DB;
+package DB;
 
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -39,7 +39,7 @@ public class ExcelDBGenerator {
 
     public static void main(String[] args) throws Exception {
         String input = "equipos.xlsx";
-        String output = "equipos_final.xlsx";
+        String output = "/output/equipos_final.xlsx";
 
         List<StatsEquipo> datos = leerExcel(input);
         List<EquipoFinal> resultado = generarDB(datos);

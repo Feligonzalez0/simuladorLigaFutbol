@@ -8,8 +8,8 @@ public class Main {
     public static void main(String[] args) {
 
         // Crear equipos (ajustá según tu clase Equipo)
-        Equipo local = new Equipo("Boca", 100, 50, 50);      // ataque, defensa, medio
-        Equipo visitante = new Equipo("River", 50, 50, 50);
+        Equipo local = new Equipo("Boca", 84, 83, 85);      // ataque, defensa, medio
+        Equipo visitante = new Equipo("River", 88, 86, 82);
 
         // Crear simulador
         SimuladorPartido simulador = new SimuladorPartido();

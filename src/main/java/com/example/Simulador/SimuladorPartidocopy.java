@@ -6,7 +6,7 @@ import com.example.Simulador.Evento.*;
 
 import java.util.*;
 
-public class SimuladorPartido {
+public class SimuladorPartidocopy {
 
     private Random random = new Random();
 

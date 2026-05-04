@@ -7,42 +7,16 @@ import com.example.Simulador.Evento.*;
 public class Main {
     public static void main(String[] args) {
 
-        // Crear equipos (ajustá según tu clase Equipo)
-        Equipo local = new Equipo("Boca", 84, 83, 85);      // ataque, defensa, medio
-        Equipo visitante = new Equipo("River", 88, 86, 82);
+        List<Equipo> equipos = List.of(
+            new Equipo("Equipo A", 70, 65, 60),
+            new Equipo("Equipo B", 68, 70, 66),
+            new Equipo("Equipo C", 75, 72, 69),
+            new Equipo("Equipo D", 65, 60, 64),
+            new Equipo("Equipo E", 65, 60, 64)
+        );
 
-        // Crear simulador
-        SimuladorPartido simulador = new SimuladorPartido();
+        Liga liga = new Liga("League Test", equipos);
 
-        // Simular
-        List<Evento> eventos = simulador.simular(local, visitante);
-
-        // Mostrar eventos
-        System.out.println("=== EVENTOS DEL PARTIDO ===");
-        for (Evento e : eventos) {
-            System.out.println("Min " + e.getMinuto() + ": " + e.getDescripcion());
-        }
-
-        // Calcular resultado final
-        int golesLocal = 0;
-        int golesVisitante = 0;
-
-        for (Evento e : eventos) {
-            if (e instanceof EventoGol) {
-                EventoGol gol = (EventoGol) e;
-
-                if (gol.getEquipo() == local) {
-                    golesLocal++;
-                } else {
-                    golesVisitante++;
-                }
-            }
-        }
-
-        // Mostrar resultado
-        System.out.println("\n=== RESULTADO FINAL ===");
-        System.out.println(local.getNombre() + " " + golesLocal +
-                           " - " + golesVisitante + " " +
-                           visitante.getNombre());
+        liga.imprimirFixture();
     }
 }

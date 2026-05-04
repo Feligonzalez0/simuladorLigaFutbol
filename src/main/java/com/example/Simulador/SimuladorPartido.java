@@ -83,6 +83,9 @@ public class SimuladorPartido {
     // ─── Random centralizado ──────────────────────────────────────────────
     private final Random random = new Random();
 
+    // ─── Resumen ──────────────────────────────────────────────────────────
+    private String resumen;
+    private double posesionLocalFinalPR;
     // ══════════════════════════════════════════════════════════════════════
     //  MÉTODO PÚBLICO
     // ══════════════════════════════════════════════════════════════════════
@@ -353,6 +356,7 @@ public class SimuladorPartido {
         long totalOcasiones = eventos.stream().filter(e -> e instanceof EventoOcasion).count();
         long totalGoles     = eventos.stream().filter(e -> e instanceof EventoGol).count();
         double posL = acumPosesionLocal / MINUTOS_PARTIDO * 100;
+        posesionLocalFinalPR = posL;
 
         System.out.println("\n=== RESUMEN DEL PARTIDO ===");
         System.out.printf("Posesión  →  %s: %.1f%%  |  %s: %.1f%%%n",
@@ -364,5 +368,9 @@ public class SimuladorPartido {
                 estado.getLocal().getNombre(), estado.getGolesLocal(),
                 estado.getGolesVisitante(), estado.getVisitante().getNombre());
         System.out.println("===========================\n");
+    }
+
+    public double getPosesionLocalFinal(){
+        return this.posesionLocalFinalPR;
     }
 }

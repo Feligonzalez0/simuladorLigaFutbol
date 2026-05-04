@@ -14,4 +14,8 @@ public class Fecha {
             tabla.actualizar(p);
         }
     }
+
+    public List<Partido> getPartidos(){
+        return partidos;
+    }
 }

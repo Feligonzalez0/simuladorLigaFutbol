@@ -1,10 +1,18 @@
 package com.example;
 
+import java.util.List;
+
+import com.example.Simulador.SimuladorPartido;
+import com.example.Simulador.Evento.Evento;
+import com.example.Simulador.Evento.EventoGol;
+import com.example.Simulador.Evento.EventoOcasion;
+
 public class Partido {
     private Equipo local;
     private Equipo visitante;
     private int golesLocal;
     private int golesVisitante;
+    private List<Evento> eventos;
 
     public Partido (Equipo local, Equipo visitante){
         this.local = local;
@@ -14,7 +22,26 @@ public class Partido {
     }
 
     public void simular(){
+        SimuladorPartido simulador = new SimuladorPartido();
         
+        List<Evento> eventosSimulados = simulador.simular(local, visitante);
+
+        this.eventos = eventosSimulados;
+
+        int golesLocal = 0;
+        int golesVisitante = 0;
+
+        for (Evento e : eventosSimulados){
+            if (e instanceof EventoGol) {
+                if (((EventoGol)e).getEquipo().equals(local)){
+                    golesLocal++;
+                } else if (((EventoGol)e).getEquipo().equals(visitante)){
+                    golesVisitante++;
+                }
+            } 
+        }
+        this.golesLocal = golesLocal;
+        this.golesVisitante = golesVisitante;
     }
     
     // Getters y setters

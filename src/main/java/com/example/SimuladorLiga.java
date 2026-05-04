@@ -19,7 +19,7 @@ public class SimuladorLiga {
             throw new IllegalStateException("La liga ya finalizó.");
         }
 
-        List<Fecha> fechas = liga.getFixture();
+        List<Fecha> fechas = liga.getFechas();
 
         if (fechaActual >= fechas.size()){
             finalizada = true;
@@ -50,6 +50,6 @@ public class SimuladorLiga {
     }
 
     public List<Fecha> getFixture(){
-        return liga.getFixture();
+        return liga.getFechas();
     }
 }

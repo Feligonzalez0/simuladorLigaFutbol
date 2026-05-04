@@ -131,7 +131,7 @@ public class SimuladorPartido {
             }
         }
 
-        imprimirResumen(estado, acumPosesionLocal, eventos);
+        //imprimirResumen(estado, acumPosesionLocal, eventos);
         return eventos;
     }
 

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tabla — {{ligaNombre}}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,600;0,700;0,800;1,700&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="/" class="logo">
+      <span class="logo-icon">⚽</span>
+      <span class="logo-text">{{ligaNombre}}</span>
+    </a>
+    <nav class="main-nav">
+      <a href="/" class="nav-link">Inicio</a>
+      <a href="/tabla" class="nav-link active">Tabla</a>
+      <a href="/fixture" class="nav-link">Fixture</a>
+    </nav>
+  </div>
+</header>
+
+<main class="site-main site-main--narrow">
+
+  <div class="page-header">
+    <h1 class="page-title">Tabla de Posiciones</h1>
+    <p class="page-sub">{{fechasJugadas}} de {{totalFechas}} jornadas jugadas</p>
+  </div>
+
+  <section class="card card--tabla">
+    <table class="tabla-posiciones">
+      <thead>
+        <tr>
+          <th class="col-pos">#</th>
+          <th class="col-equipo">Equipo</th>
+          <th title="Partidos Jugados">PJ</th>
+          <th title="Ganados">G</th>
+          <th title="Empatados">E</th>
+          <th title="Perdidos">P</th>
+          <th title="Goles a Favor">GF</th>
+          <th title="Goles en Contra">GC</th>
+          <th title="Diferencia de Goles">DIF</th>
+          <th class="col-pts" title="Puntos">PTS</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#filas}}
+        <tr class="{{#esTop}}fila-clasificacion{{/esTop}}">
+          <td class="col-pos">
+            {{#esTop}}<span class="pos-badge pos-badge--top">{{pos}}</span>{{/esTop}}
+            {{^esTop}}<span class="pos-badge">{{pos}}</span>{{/esTop}}
+          </td>
+          <td class="col-equipo nombre-equipo">{{nombre}}</td>
+          <td>{{pj}}</td>
+          <td>{{g}}</td>
+          <td>{{e}}</td>
+          <td>{{p}}</td>
+          <td>{{gf}}</td>
+          <td>{{gc}}</td>
+          <td class="dif">{{dif}}</td>
+          <td class="col-pts pts-valor">{{pts}}</td>
+        </tr>
+        {{/filas}}
+      </tbody>
+    </table>
+
+    <div class="tabla-leyenda">
+      <span class="leyenda-item"><span class="leyenda-dot leyenda-dot--top"></span> Zona clasificación</span>
+    </div>
+  </section>
+
+  <div class="page-actions">
+    <form method="post" action="/simular">
+      <button type="submit" class="btn btn--primary">▶ Simular siguiente jornada</button>
+    </form>
+    <a href="/fixture" class="btn btn--ghost">Ver fixture</a>
+  </div>
+
+</main>
+
+<footer class="site-footer">
+  <p>SimuLiga &mdash; Motor estadístico xG &copy; 2026</p>
+</footer>
+
+</body>
+</html>

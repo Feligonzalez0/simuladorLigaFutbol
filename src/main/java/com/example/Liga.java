@@ -1,4 +1,7 @@
 package com.example;
+
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -7,20 +10,25 @@ import java.util.Map;
 public class Liga {
     private String nombre;
     private List<Equipo> equipos;
-    private List<Fecha> fixture;
+    private List<Fecha> fechas;
     private Tabla tabla;
+    private int fechaActual; // índice de la próxima fecha a jugar (0-based)
 
-    public Liga (String nombre, List<Equipo> equipos){
-        this.nombre = nombre;
-        this.equipos = equipos;
-        this.fixture = generarFixture(equipos);
-        this.tabla = new Tabla(equipos);
+    public Liga(String nombre, List<Equipo> equipos) {
+        this.nombre    = nombre;
+        this.equipos   = equipos;
+        this.fechas    = generarFixture(equipos);
+        this.tabla     = new Tabla(equipos);
+        this.fechaActual = 0;
     }
 
+    // ── Fixture round-robin (algoritmo de rotación) ──────────────────────
     private List<Fecha> generarFixture(List<Equipo> equipos) {
         List<Fecha> fechas = new LinkedList<>();
         List<Equipo> lista = new LinkedList<>(equipos);
         
+        Collections.shuffle(lista); // aleatoriedad
+
         if (lista.size() % 2 != 0) {
             lista.add(null);
         }
@@ -74,7 +82,7 @@ public class Liga {
                 }
             }
 
-            fechas.add(new Fecha(partidos));
+            fechas.add(new Fecha(f+1, partidos));
 
             // rotación
             Equipo ultimo = lista.remove(n - 1);
@@ -84,30 +92,21 @@ public class Liga {
         return fechas;
     }
 
-    void imprimirFixture(){
-        System.err.println("--- FIXTURE " + this.nombre + " ---");
-
-        for (int i = 0; i < fixture.size(); i++){
-            System.err.println("FECHA " + (i + 1));
-            
-            Fecha fecha = fixture.get(i);
-            List<Partido> partidos = fecha.getPartidos();
-            
-            for(int j = 0; j < partidos.size(); j++){
-                Partido partido = partidos.get(j);
-                String local = partido.getLocal().getNombre();
-                String visita = partido.getVisitante().getNombre();
-                System.err.println(local + " VS " + visita);
-            }
-            System.err.println();
-        }
+    // ── Simular la siguiente fecha pendiente ─────────────────────────────
+    public Fecha simularSiguienteFecha() {
+        if (fechaActual >= fechas.size()) return null;
+        Fecha f = fechas.get(fechaActual);
+        f.jugarFecha(tabla);
+        fechaActual++;
+        return f;
     }
 
-    public List<Fecha> getFixture() {
-        return fixture;
-    }
-
-    public Tabla getTabla() {
-        return tabla;
-    }
+    public boolean hayFechasPendientes() { return fechaActual < fechas.size(); }
+    public int  getFechaActualNumero()   { return fechaActual + 1; }
+    public int  getTotalFechas()         { return fechas.size(); }
+    public String getNombre()            { return nombre; }
+    public List<Equipo> getEquipos()     { return equipos; }
+    public List<Fecha>  getFechas()      { return fechas; }
+    public Tabla        getTabla()       { return tabla; }
+    public int          getFechaActualIdx() { return fechaActual; }
 }

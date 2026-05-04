@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{{ligaNombre}} — Inicio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,600;0,700;0,800;1,700&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="/" class="logo">
+      <span class="logo-icon">⚽</span>
+      <span class="logo-text">{{ligaNombre}}</span>
+    </a>
+    <nav class="main-nav">
+      <a href="/" class="nav-link active">Inicio</a>
+      <a href="/tabla" class="nav-link">Tabla</a>
+      <a href="/fixture" class="nav-link">Fixture</a>
+    </nav>
+  </div>
+</header>
+
+<main class="site-main">
+
+  <!-- HERO ───────────────────────────────────────── -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-content">
+      <p class="hero-label">Simulador Estadístico · Motor xG</p>
+      <h1 class="hero-title">{{ligaNombre}}</h1>
+      {{#hayFechasPendientes}}
+      <p class="hero-sub">Jornada {{proximaFecha}} de {{totalFechas}} — ¡Lista para simular!</p>
+      {{/hayFechasPendientes}}
+      {{#ligaTerminada}}
+      <p class="hero-sub hero-sub--done">🏆 Temporada finalizada</p>
+      {{/ligaTerminada}}
+    </div>
+  </section>
+
+  <div class="page-grid">
+
+    <!-- COLUMNA IZQUIERDA: acciones + última fecha ────── -->
+    <div class="col-main">
+
+      <!-- PANEL DE CONTROL -->
+      <section class="card card--action">
+        <h2 class="card-title">Panel de control</h2>
+        <div class="action-buttons">
+          {{#hayFechasPendientes}}
+          <form method="post" action="/simular">
+            <button type="submit" class="btn btn--primary btn--lg">
+              <span class="btn-icon">▶</span>
+              Simular Jornada {{proximaFecha}}
+            </button>
+          </form>
+          {{/hayFechasPendientes}}
+          {{#ligaTerminada}}
+          <div class="badge badge--champion">🏆 Liga Terminada</div>
+          {{/ligaTerminada}}
+
+          <form method="post" action="/nueva-liga" onsubmit="return confirm('¿Reiniciar la liga?')">
+            <button type="submit" class="btn btn--ghost">↺ Nueva liga</button>
+          </form>
+        </div>
+
+        <div class="progress-wrap">
+          <div class="progress-label">
+            <span>Progreso de temporada</span>
+            <span>{{fechasJugadas}} / {{totalFechas}} jornadas</span>
+          </div>
+          <div class="progress-bar">
+            <div class="progress-fill" style="width: {{progreso}}%"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ÚLTIMA JORNADA SIMULADA -->
+      {{#hayUltimaFecha}}
+      <section class="card">
+        <h2 class="card-title">Jornada {{ultimaFecha}} — Resultados</h2>
+        <div class="resultados-lista">
+          {{#ultimaFechaPartidos}}
+          <div class="resultado-row {{#ganóLocal}}res--home{{/ganóLocal}}{{#empate}}res--draw{{/empate}}{{#ganóVisitante}}res--away{{/ganóVisitante}}">
+            <span class="equipo equipo--local">{{local}}</span>
+            <span class="marcador">{{golesLocal}} — {{golesVisitante}}</span>
+            <span class="equipo equipo--visitante">{{visitante}}</span>
+          </div>
+          {{/ultimaFechaPartidos}}
+        </div>
+      </section>
+      {{/hayUltimaFecha}}
+    </div>
+
+    <!-- COLUMNA DERECHA: mini tabla ─────────────────── -->
+    <div class="col-side">
+      <section class="card">
+        <h2 class="card-title">Top 5 <a href="/tabla" class="card-link">Ver completa →</a></h2>
+        <table class="mini-tabla">
+          <thead>
+            <tr><th>#</th><th>Equipo</th><th>PJ</th><th>Pts</th></tr>
+          </thead>
+          <tbody>
+            {{#top5}}
+            <tr class="{{#esTop}}fila-top{{/esTop}}">
+              <td class="pos">{{pos}}</td>
+              <td class="nombre">{{nombre}}</td>
+              <td>{{pj}}</td>
+              <td class="pts">{{pts}}</td>
+            </tr>
+            {{/top5}}
+          </tbody>
+        </table>
+        <a href="/fixture" class="card-footer-link">Ver fixture completo →</a>
+      </section>
+    </div>
+
+  </div><!-- /page-grid -->
+
+</main>
+
+<footer class="site-footer">
+  <p>SimuLiga &mdash; Motor estadístico xG &copy; 2026</p>
+</footer>
+
+</body>
+</html>

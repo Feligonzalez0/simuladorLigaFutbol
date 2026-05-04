@@ -17,6 +17,6 @@ public class Main {
 
         Liga liga = new Liga("League Test", equipos);
 
-        liga.imprimirFixture();
+        //liga.imprimirFixture();
     }
 }

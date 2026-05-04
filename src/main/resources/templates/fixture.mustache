@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fixture — {{ligaNombre}}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,600;0,700;0,800;1,700&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="/" class="logo">
+      <span class="logo-icon">⚽</span>
+      <span class="logo-text">{{ligaNombre}}</span>
+    </a>
+    <nav class="main-nav">
+      <a href="/" class="nav-link">Inicio</a>
+      <a href="/tabla" class="nav-link">Tabla</a>
+      <a href="/fixture" class="nav-link active">Fixture</a>
+    </nav>
+  </div>
+</header>
+
+<main class="site-main site-main--wide">
+
+  <div class="page-header">
+    <h1 class="page-title">Fixture Completo</h1>
+    <form method="post" action="/simular" style="display:inline">
+      <button type="submit" class="btn btn--primary btn--sm">▶ Simular siguiente</button>
+    </form>
+  </div>
+
+  <div class="fixture-grid">
+    {{#fechas}}
+    <div class="fecha-card {{#jugada}}fecha-card--jugada{{/jugada}}{{#pendiente}}fecha-card--pendiente{{/pendiente}}">
+      <div class="fecha-header">
+        <span class="fecha-numero">Jornada {{numero}}</span>
+        {{#jugada}}<span class="fecha-badge fecha-badge--done">✓ Jugada</span>{{/jugada}}
+        {{#pendiente}}<span class="fecha-badge fecha-badge--pending">Pendiente</span>{{/pendiente}}
+      </div>
+      <div class="fecha-partidos">
+        {{#partidos}}
+        <div class="partido-row {{#simulado}}partido-row--done{{/simulado}}">
+          <span class="eq eq--local {{#ganóLocal}}eq--winner{{/ganóLocal}}">{{local}}</span>
+          <span class="marcador-fix {{#simulado}}marcador-fix--done{{/simulado}}">
+            {{#simulado}}{{resultado}}{{/simulado}}
+            {{^simulado}}vs{{/simulado}}
+          </span>
+          <span class="eq eq--visitante {{#ganóVisitante}}eq--winner{{/ganóVisitante}}">{{visitante}}</span>
+        </div>
+        {{/partidos}}
+      </div>
+    </div>
+    {{/fechas}}
+  </div>
+
+</main>
+
+<footer class="site-footer">
+  <p>SimuLiga &mdash; Motor estadístico xG &copy; 2026</p>
+</footer>
+
+</body>
+</html>
